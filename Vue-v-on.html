@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="../JS/vue.js"></script>
+<body>
+    <div id="app">
+        <!--v-for是监听子组件触发的自定义事件。-->
+        <input type="button" value="点我一下" v-on:click="handle()">
+        <input type="button" value="点我一下" @click="handle()"><!-- 简写 -->
+    </div>
+</body>
+<script>
+    //定义Vue
+    new Vue({   
+        el:"#app",
+        data:{
+
+        },
+        methods: {
+            handle:function(){
+                alert("你点了一下");
+            }
+        }
+    })
+</script>
+</html>

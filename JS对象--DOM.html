@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <img src="../images/03.jpg" id="h1" />
+
+        <div class="cls">123abc</div>
+        <br />
+        <div class="cls">程序员</div>
+        <br />
+
+        <input type="checkbox" name="hobby" />
+        电影
+        <input type="checkbox" name="hobby" />
+        旅游
+        <input type="checkbox" name="hobby" />
+        游戏
+    </body>
+    <script>
+        //DOM  文档对象模型
+        //1.1根据id获取
+        // var img = document.getElementById('h1');
+        // alert(img);
+
+        //1.2根据标签获取
+        // var divs = document.getElementsByTagName('div');
+        // for (let i = 0; i < divs.length; i++) {
+        //     alert(divs[i]);
+
+        //1.3根据name属性获取
+        // var ins = document.getElementsByName('hobby');
+        // for (let i = 0; i < ins.length; i++) {
+        //     alert(ins[i]);
+        // }
+
+        //1.4根据class与上面相同
+
+        //
+        // var divs = document.getElementsByClassName('cls');
+        // var div1 = divs[0];
+
+        // div1.innerHTML = "牛魔666";//修改第一个div中的值
+
+        //修改src中的属性值以此更换图片
+        var img = document.getElementById('h1');
+        img.src = '../images/2.jpg';
+
+        //在所有div盒子的内容中添加verygood(红色字体)
+        var divs = document.getElementsByClassName('cls');
+        for (var i = 0; i < divs.length; i++) {
+            const div = divs[i];
+            //innerHTML可以识别html标签
+            div.innerHTML += '<font color="red">very good</font>';
+        }
+
+        //使复选框都处于被选中状态
+        var ins = document.getElementsByName('hobby');
+        for (var i = 0; i < ins.length; i++) {
+            const check = ins[i];
+            check.checked = true;;//选中
+        }
+    </script>
+</html>
