@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tlias智能学习辅助系统</title>
+        <style>
+            /* 设置顶部导航栏的样式 */
+            .top-nav {
+                background-color: #919191; /* 浅灰色背景 */
+                padding: 10px; /* 内边距 */
+                display: flex; /* 使用弹性布局 */
+                justify-content: space-between; /* 标题居左，退出登录链接居右 */
+                align-items: center; /* 垂直居中对齐 */
+            }
+
+            /* 设置标题的样式 */
+            .top-nav h1 {
+                margin: 0; /* 去除标题的默认外边距 */
+                font-weight: bold; /* 加粗显示标题 */
+                color: #ffffff; /* 标题颜色 */
+            }
+
+            /* 设置退出登录链接的样式 */
+            .top-nav a {
+                color: #333; /* 链接颜色 */
+                text-decoration: none; /* 去除下划线 */
+                padding: 8px 16px; /* 内边距 */
+                background-color: #ccc; /* 按钮背景颜色 */
+                color: white; /* 按钮文字颜色 */
+            }
+
+            /* 设置下拉框的样式 */
+            .search-select {
+                padding: 8px; /* 内边距 */
+                border: 1px solid #ccc; /* 边框 */
+                border-radius: 4px; /* 圆角 */
+                margin-right: 10px; /* 与其他搜索框有一定间距 */
+                width: 150px; /* 设置宽度与搜索框一致 */
+            }
+
+            /* 设置按钮的样式 */
+            .search-button {
+                padding: 8px 16px; /* 内边距 */
+                border: none; /* 去除边框 */
+                border-radius: 4px; /* 圆角 */
+                cursor: pointer; /* 鼠标指针样式 */
+                margin-left: 10px; /* 与其他按钮有一定间距 */
+                transition: background-color 0.3s ease; /* 背景颜色渐变过渡效果 */
+            }
+
+            /* 设置查询按钮的样式 */
+            .search-button.query {
+                background-color: #4caf50; /* 按钮背景颜色 */
+                color: white; /* 按钮文字颜色 */
+            }
+
+            /* 设置查询按钮的悬停和点击效果 */
+            .search-button.query:hover,
+            .search-button.query:active {
+                background-color: #3e8e41; /* 悬停和点击时的背景颜色 */
+            }
+
+            /* 设置清空按钮的样式 */
+            .search-button.clear {
+                background-color: #ccc; /* 按钮背景颜色 */
+                color: white; /* 按钮文字颜色 */
+            }
+
+            /* 设置清空按钮的悬停和点击效果 */
+            .search-button.clear:hover,
+            .search-button.clear:active {
+                background-color: #999; /* 悬停和点击时的背景颜色 */
+            }
+
+            /* 设置搜索表单区域的样式 */
+            .search-form {
+                display: flex; /* 使用弹性布局 */
+                justify-content: center; /* 水平居中 */
+                align-items: center; /* 垂直居中 */
+                flex-wrap: wrap; /* 允许搜索框换行 */
+                gap: 10px; /* 搜索框之间的间距 */
+                margin: 20px auto; /* 上下外边距为20px，左右自动居中 */
+                width: fit-content; /* 宽度自适应内容 */
+            }
+
+            /* 设置搜索框的样式 */
+            .search-input {
+                padding: 8px; /* 内边距 */
+                border: 1px solid #ccc; /* 边框 */
+                border-radius: 4px; /* 圆角 */
+                margin-right: 10px; /* 与其他搜索框有一定间距 */
+                width: 150px; /* 设置宽度 */
+            }
+
+            /* 媒体查询：当屏幕宽度小于600px时，调整样式 */
+            @media (max-width: 600px) {
+                .top-nav {
+                    flex-direction: column; /* 垂直排列导航栏元素 */
+                    align-items: center; /* 垂直居中对齐 */
+                }
+
+                .search-form {
+                    flex-direction: column; /* 垂直排列搜索框和按钮 */
+                    align-items: stretch; /* 拉伸搜索框和按钮以填充宽度 */
+                }
+
+                .search-input,
+                .search-select,
+                .search-button {
+                    width: 100%; /* 搜索框和按钮宽度100% */
+                    margin-right: 0; /* 去除右边距 */
+                    margin-bottom: 10px; /* 增加底部边距 */
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 顶部导航栏 -->
+        <div class="top-nav">
+            <h1>Tlias智能学习辅助系统</h1>
+            <a href="#">退出登录</a>
+        </div>
+
+        <!-- 搜索表单区域 -->
+        <form action="/search" method="post">
+            <div class="search-form">
+                <div class="search-item">
+                    <label for="name">姓名：</label>
+                    <input type="text" id="name" class="search-input" placeholder="请输入姓名" name="name" />
+                </div>
+                <div class="search-item">
+                    <label for="gender">性别：</label>
+                    <select id="gender" class="search-select" name="gender">
+                        <option value="">性别</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
+                </div>
+                <div class="search-item">
+                    <label for="position">职位：</label>
+                    <select id="position" class="search-select" name="position">
+                        <option value="">职位</option>
+                        <option value="1">经理</option>
+                        <option value="2">员工</option>
+                        <option value="3">采购员</option>
+                        <option value="4">保安</option>
+                        <option value="5">前台</option>
+                    </select>
+                </div>
+                <div class="search-buttons">
+                    <button class="search-button query" type="submit">查询</button>
+                    <button class="search-button clear" type="reset">清空</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tlias智能学习辅助系统</title>
+    <style>
+        /* 设置顶部导航栏的样式 */
+        .top-nav {
+            background-color: #919191; /* 浅灰色背景 */
+            padding: 10px; /* 内边距 */
+            display: flex; /* 使用弹性布局 */
+            justify-content: space-between; /* 标题居左，退出登录链接居右 */
+            align-items: center; /* 垂直居中对齐 */
+        }
+
+        /* 设置标题的样式 */
+        .top-nav h1 {
+            margin: 0; /* 去除标题的默认外边距 */
+            font-weight: bold; /* 加粗显示标题 */
+            color: #ffffff; /* 标题颜色 */
+        }
+
+        /* 设置退出登录链接的样式 */
+        .top-nav a {
+            color: #333; /* 链接颜色 */
+            text-decoration: none; /* 去除下划线 */
+        }
+
+        /* 设置下拉框的样式 */
+        .search-select {
+            padding: 8px; /* 内边距 */
+            border: 1px solid #ccc; /* 边框 */
+            border-radius: 4px; /* 圆角 */
+            margin-right: 10px; /* 与其他搜索框有一定间距 */
+            width: 150px; /* 设置宽度与搜索框一致 */
+        }
+
+        /* 设置按钮的样式 */
+        .search-button {
+            padding: 8px 16px; /* 内边距 */
+            border: none; /* 去除边框 */
+            border-radius: 4px; /* 圆角 */
+            cursor: pointer; /* 鼠标指针样式 */
+            margin-left: 10px; /* 与其他按钮有一定间距 */
+            transition: background-color 0.3s ease; /* 背景颜色渐变过渡效果 */
+        }
+
+        /* 设置查询按钮的样式 */
+        .search-button.query {
+            background-color: #4caf50; /* 按钮背景颜色 */
+            color: white; /* 按钮文字颜色 */
+        }
+
+        /* 设置查询按钮的悬停和点击效果 */
+        .search-button.query:hover,
+        .search-button.query:active {
+            background-color: #3e8e41; /* 悬停和点击时的背景颜色 */
+        }
+
+        /* 设置清空按钮的样式 */
+        .search-button.clear {
+            background-color: #ccc; /* 按钮背景颜色 */
+            color: white; /* 按钮文字颜色 */
+        }
+
+        /* 设置清空按钮的悬停和点击效果 */
+        .search-button.clear:hover,
+        .search-button.clear:active {
+            background-color: #999; /* 悬停和点击时的背景颜色 */
+        }
+
+        /* 设置搜索表单区域的样式 */
+        .search-form {
+            display: flex; /* 使用弹性布局 */
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            flex-wrap: wrap; /* 允许搜索框换行 */
+            gap: 10px; /* 搜索框之间的间距 */
+            margin: 20px auto; /* 上下外边距为20px，左右自动居中 */
+            width: fit-content; /* 宽度自适应内容 */
+        }
+
+        /* 设置搜索框的样式 */
+        .search-input {
+            padding: 8px; /* 内边距 */
+            border: 1px solid #ccc; /* 边框 */
+            border-radius: 4px; /* 圆角 */
+            margin-right: 10px; /* 与其他搜索框有一定间距 */
+            width: 150px; /* 设置宽度 */
+        }
+
+        /* 设置表格的样式 */
+        table {
+            width: 100%; /* 表格宽度占满父容器 */
+            border-collapse: collapse; /* 边框合并 */
+            margin: 20px auto; /* 上下外边距为20px，左右自动居中 */
+        }
+
+        /* 设置表格标题的样式 */
+        th {
+            background-color: #ccc; /* 标题背景颜色 */
+            padding: 10px; /* 内边距 */
+            text-align: left; /* 文字左对齐 */
+        }
+
+        /* 设置表格单元格的样式 */
+        td {
+            padding: 10px; /* 内边距 */
+            border-bottom: 1px solid #ccc; /* 底部边框 */
+        }
+
+        /* 设置头像图片的样式 */
+        .avatar {
+            width: 50px; /* 图片宽度 */
+            height: 50px; /* 图片高度 */
+            border-radius: 50%; /* 圆形头像 */
+        }
+
+        /* 设置操作按钮的样式 */
+        .action-button {
+            padding: 8px 16px; /* 内边距 */
+            border: none; /* 去除边框 */
+            border-radius: 4px; /* 圆角 */
+            cursor: pointer; /* 鼠标指针样式 */
+            margin-left: 10px; /* 与其他按钮有一定间距 */
+            transition: background-color 0.3s ease; /* 背景颜色渐变过渡效果 */
+        }
+
+        /* 设置编辑按钮的样式 */
+        .action-button.edit {
+            background-color: #4caf50; /* 按钮背景颜色 */
+            color: white; /* 按钮文字颜色 */
+        }
+
+        /* 设置编辑按钮的悬停和点击效果 */
+        .action-button.edit:hover,
+        .action-button.edit:active {
+            background-color: #3e8e41; /* 悬停和点击时的背景颜色 */
+        }
+
+        /* 设置删除按钮的样式 */
+        .action-button.delete {
+            background-color: #ccc; /* 按钮背景颜色 */
+            color: white; /* 按钮文字颜色 */
+        }
+
+        /* 设置删除按钮的悬停和点击效果 */
+        .action-button.delete:hover,
+        .action-button.delete:active {
+            background-color: #999; /* 悬停和点击时的背景颜色 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <h1>Tlias智能学习辅助系统</h1>
+        <a href="#">退出登录</a>
+    </div>
+
+    <!-- 搜索表单区域 -->
+    <form class="search-form" action="/search" method="post">
+        <div class="search-item">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" class="search-input" placeholder="请输入姓名" name="name" />
+        </div>
+        <div class="search-item">
+            <label for="gender">性别：</label>
+            <select id="gender" class="search-select" name="gender">
+                <option value="">性别</option>
+                <option value="1">男</option>
+                <option value="2">女</option>
+            </select>
+        </div>
+        <div class="search-item">
+            <label for="position">职位：</label>
+            <select id="position" class="search-select" name="position">
+                <option value="">职位</option>
+                <option value="1">经理</option>
+                <option value="2">员工</option>
+                <option value="3">采购员</option>
+                <option value="4">保安</option>
+                <option value="5">前台</option>
+            </select>
+        </div>
+        <div class="search-buttons">
+            <button class="search-button query" type="submit">查询</button>
+            <button class="search-button clear" type="reset">清空</button>
+        </div>
+    </form>
+
+    <!-- 表格数据展示区域 -->
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">姓名</th>
+                    <th style="text-align: center;">性别</th>
+                    <th style="text-align: center;">头像</th>
+                    <th style="text-align: center;">职位</th>
+                    <th style="text-align: center;">入职时间</th>
+                    <th style="text-align: center;">最后操作时间</th>
+                    <th style="text-align: center;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 这里将通过JavaScript动态填充数据 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 模拟从后端获取数据的函数
+        function fetchData() {
+            // 这里可以使用AJAX或Fetch API从后端获取数据
+            // 为了演示，我们使用一个简单的数组来模拟数据
+            const data = [
+                {
+                    name: '张三',
+                    gender: '男',
+                    avatar: 'avatar1.jpg',
+                    position: '经理',
+                    hireDate: '2023-01-01',
+                    lastActionTime: '2023-09-12 12:12:12',
+                },
+                {
+                    name: '李四',
+                    gender: '女',
+                    avatar: 'avatar2.jpg',
+                    position: '员工',
+                    hireDate: '2023-02-01',
+                    lastActionTime: '2023-09-13 13:13:13',
+                },
+                {
+                    name: '王五',
+                    gender: '男',
+                    avatar: 'avatar2.jpg',
+                    position: '采购员',
+                    hireDate: '2025-01-01',
+                    lastActionTime: '2023-09-13 13:13:13',
+                },
+                {
+                    name: '赵六',
+                    gender: '男',
+                    avatar: 'avatar2.jpg',
+                    position: '保安',
+                    hireDate: '2023-02-01',
+                    lastActionTime: '2023-09-13 13:13:13',
+                },
+                {
+                    name: '唐七',
+                    gender: '女',
+                    avatar: 'avatar2.jpg',
+                    position: '前台',
+                    hireDate: '2013-02-01',
+                    lastActionTime: '2023-09-13 13:13:13',
+                },
+                // 可以添加更多数据...
+            ];
+
+            // 将数据填充到表格中
+            const tableBody = document.querySelector('#data-table tbody');
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="text-align: center;">${item.name}</td>
+                    <td style="text-align: center;">${item.gender}</td>
+                    <td style="text-align: center;"><img src="${item.avatar}" alt="${item.name}" class="avatar"></td>
+                    <td style="text-align: center;">${item.position}</td>
+                    <td style="text-align: center;">${item.hireDate}</td>
+                    <td style="text-align: center;">${item.lastActionTime}</td>
+                    <td style="text-align: center;">
+                        <button class="action-button" onclick="editRow(this)">编辑</button>
+                        <button class="action-button" onclick="deleteRow(this)">删除</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // 模拟编辑行的函数
+        function editRow(button) {
+            const row = button.closest('tr');
+            // 这里可以添加编辑行的逻辑
+            alert(`编辑行：${row.querySelector('td:first-child').textContent}`);
+        }
+
+        // 模拟删除行的函数
+        function deleteRow(button) {
+            const row = button.closest('tr');
+            // 这里可以添加删除行的逻辑
+            alert(`删除行：${row.querySelector('td:first-child').textContent}`);
+            row.remove();
+        }
+
+        // 页面加载时调用fetchData函数
+        window.onload = fetchData;
+    </script>
+    </body>
+</html>
