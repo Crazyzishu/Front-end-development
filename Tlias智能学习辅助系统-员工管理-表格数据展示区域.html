@@ -98,8 +98,8 @@
                 align-items: center; /* 垂直居中 */
                 flex-wrap: wrap; /* 允许搜索框换行 */
                 gap: 10px; /* 搜索框之间的间距 */
-                margin:20px auto; /* 上下外边距为 20px，左右自动居中 */
-                
+                margin: 20px auto; /* 上下外边距为 20px，左右自动居中 */
+
                 width: fit-content; /* 宽度自适应内容 */
             }
 
@@ -130,6 +130,10 @@
             td {
                 padding: 10px; /* 内边距 */
                 border: 1px solid #ccc; /* 底部边框 */
+                /* 新增样式，使文字水平居中 */
+                text-align: center;
+                /* 新增样式，使文字垂直居中 */
+                vertical-align: middle;
             }
 
             /* 设置头像图片的样式 */
@@ -220,6 +224,7 @@
                 <table id="data-table">
                     <thead>
                         <tr>
+                            <th style="text-align: center">序号</th>
                             <th style="text-align: center">姓名</th>
                             <th style="text-align: center">性别</th>
                             <th style="text-align: center">头像</th>
@@ -229,103 +234,82 @@
                             <th style="text-align: center">操作</th>
                         </tr>
                     </thead>
+                    <!-- 表格主体内容 -->
                     <tbody>
-                        <!-- 这里将通过JavaScript动态填充数据 -->
+                        <tr v-for="(e, index) in empList" :key="e.id">
+                            <td>{{index}}</td>
+                            <td>{{e.name}}</td>
+                            <td>{{e.gender}}</td>
+                            <td><img class="avator" src="{{e.image}}" alt="{{e.name}}" /></td>
+                            <td>{{e.position}}</td>
+                            <td>{{e.hireDate}}</td>
+                            <td>{{e.lastActionTime}}</td>
+                            <td>
+                                <button type="button" class="action-button edit">编辑</button>
+                                <button type="button" class="action-button delete">删除</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <script>
-            // 模拟从后端获取数据的函数
-            function fetchData() {
-                // 这里可以使用AJAX或Fetch API从后端获取数据
-                // 为了演示，我们使用一个简单的数组来模拟数据
-                const data = [
-                    {
-                        name: '张三',
-                        gender: '男',
-                        avatar: 'avatar1.jpg',
-                        position: '经理',
-                        hireDate: '2023-01-01',
-                        lastActionTime: '2023-09-12 12:12:12',
-                    },
-                    {
-                        name: '李四',
-                        gender: '女',
-                        avatar: 'avatar2.jpg',
-                        position: '员工',
-                        hireDate: '2023-02-01',
-                        lastActionTime: '2023-09-13 13:13:13',
-                    },
-                    {
-                        name: '王五',
-                        gender: '男',
-                        avatar: 'avatar2.jpg',
-                        position: '采购员',
-                        hireDate: '2025-01-01',
-                        lastActionTime: '2023-09-13 13:13:13',
-                    },
-                    {
-                        name: '赵六',
-                        gender: '男',
-                        avatar: 'avatar2.jpg',
-                        position: '保安',
-                        hireDate: '2023-02-01',
-                        lastActionTime: '2023-09-13 13:13:13',
-                    },
-                    {
-                        name: '唐七',
-                        gender: '女',
-                        avatar: 'avatar2.jpg',
-                        position: '前台',
-                        hireDate: '2013-02-01',
-                        lastActionTime: '2023-09-13 13:13:13',
-                    },
-                    // 可以添加更多数据...
-                ];
-                // 将数据填充到表格中
-                const tableBody = document.querySelector('#data-table tbody');
-                data.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                    <td style="text-align: center;">${item.name}</td>
-                    <td style="text-align: center;">${item.gender}</td>
-                    <td style="text-align: center;"><img src="${item.avatar}" alt="${item.name}" class="avatar"></td>
-                    <td style="text-align: center;">${item.position}</td>
-                    <td style="text-align: center;">${item.hireDate}</td>
-                    <td style="text-align: center;">${item.lastActionTime}</td>
-                    <td style="text-align: center;">
-                        <button class="action-button" onclick="editRow(this)">编辑</button>
-                        <button class="action-button" onclick="deleteRow(this)">删除</button>
-                    </td>
-                `;
-                    // 添加鼠标事件监听器
-                    row.addEventListener('mouseenter', function () {
-                        this.style.backgroundColor = 'lightgray';
-                        this.style.transition = 'background-color 0.3s ease';
-                    });
-                    row.addEventListener('mouseleave', function () {
-                        this.style.backgroundColor = '';
-                    });
-                    tableBody.appendChild(row);
-                });
-            }
-            // 模拟编辑行的函数
-            function editRow(button) {
-                const row = button.closest('tr');
-                // 这里可以添加编辑行的逻辑
-                alert(`编辑行：${row.querySelector('td:first-child').textContent}`);
-            }
-            // 模拟删除行的函数
-            function deleteRow(button) {
-                const row = button.closest('tr');
-                // 这里可以添加删除行的逻辑
-                alert(`删除行：${row.querySelector('td:first-child').textContent}`);
-                row.remove();
-            }
-            // 页面加载时调用fetchData函数
-            window.onload = fetchData;
+        <script type="module">
+            // 使用Vue3
+            import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+            createApp({
+                data() {
+                    return {
+                        empList: [
+                            {
+                                id: 1,
+                                name: '张三',
+                                gender: '1',
+                                image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2F699pic.com%2Ftupian%2F493763.html&psig=AOvVaw1rLo6XmKjTPZlVUgzsFfVT&ust=1741332643023000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKDXtNv39IsDFQAAAAAdAAAAABAE',
+                                position: '经理',
+                                hireDate: '2023-01-01',
+                                lastActionTime: '2023-09-12 12:12:12',
+                            },
+                            {
+                                id: 2,
+                                name: '李四',
+                                gender: '2',
+                                image: 'avatar2.jpg',
+                                position: '员工',
+                                hireDate: '2023-02-01',
+                                lastActionTime: '2023-09-13 13:13:13',
+                            },
+                            {
+                                id: 3,
+                                name: '王五',
+                                gender: '1',
+                                image: 'avatar2.jpg',
+                                position: '采购员',
+                                hireDate: '2025-01-01',
+                                lastActionTime: '2023-09-13 13:13:13',
+                            },
+                            {
+                                id: 4,
+                                name: '赵六',
+                                gender: '1',
+                                image: 'avatar2.jpg',
+                                position: '保安',
+                                hireDate: '2023-02-01',
+                                lastActionTime: '2023-09-13 13:13:13',
+                            },
+                            {
+                                id: 5,
+                                name: '唐七',
+                                gender: '2',
+                                image: 'avatar2.jpg',
+                                position: '前台',
+                                hireDate: '2013-02-01',
+                                lastActionTime: '2023-09-13 13:13:13',
+                            },
+                        ],
+                    };
+                },
+            }).mount('#data-table');
         </script>
     </body>
 </html>

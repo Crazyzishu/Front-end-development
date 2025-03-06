@@ -11,9 +11,10 @@
     <h1>{{message}}</h1>
     <h1>{{count}}</h1>
   </div>
-  
 
   <script type="module">
+    //调用createApp函数创建应用实例对象
+    //ES模块构建
     import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 
     createApp({
@@ -23,7 +24,7 @@
           count: 100
         }
       }
-    }).mount('#app');
+    }).mount('#app');//挂载 选择id为app的元素
   </script>
 </body>
 </html>
